@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if (mainTranslateField.text.isNotEmpty()) {
                     // нужно ли?
                     // mainTranslateField.text.clear()
-                    translateFragment.clearTranslateresultField()
+                    translateFragment.clearTranslateResultField()
                 } else {
                     mainTranslateField.clearFocus()
                     showMainFragment()
@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //                if (mainTranslateField.text.isNotEmpty()) {
 //                    // нужно ли?
 //                    // mainTranslateField.text.clear()
-//                    translateFragment.clearTranslateresultField()
+//                    translateFragment.clearTranslateResultField()
 //                } else {
 //                    mainTranslateField.clearFocus()
 //                    showMainFragment()
