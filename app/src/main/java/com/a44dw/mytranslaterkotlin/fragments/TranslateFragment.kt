@@ -55,13 +55,13 @@ class TranslateFragment : Fragment(), View.OnClickListener, OnDeleteListener {
     private fun initModelAndData() {
         activity?.let {
             model = ViewModelProviders.of(it)[TranslateViewModel::class.java]
-            translateFrom = model.getTranslateFrom()
+            translateFrom = model.translateFrom
             translateFrom.observe(this, Observer<String> { translateFrom ->
                 if (!model.autoFrom) {
                     translateFromHint.text = translateFrom
                 }
             })
-            translateTo = model.getTranslateTo()
+            translateTo = model.translateTo
             translateTo.observe(this, Observer<String> {translateTo ->
                 translateToButton.text = translateTo
             })

@@ -14,7 +14,7 @@ abstract class TranslateDatabase: RoomDatabase() {
     companion object {
         lateinit var INSTANCE: TranslateDatabase
 
-        fun getDatabase(context: Context): TranslateDatabase? {
+        fun getDatabase(context: Context): TranslateDatabase {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context.applicationContext, TranslateDatabase::class.java, "TranslateDatabase").build()
             }

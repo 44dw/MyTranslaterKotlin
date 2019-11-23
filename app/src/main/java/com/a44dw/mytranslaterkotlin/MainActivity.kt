@@ -43,8 +43,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val preferences = getPreferences(Activity.MODE_PRIVATE)
         if (preferences.contains(FROM_LANGUAGE_PREFS) && preferences.contains(TO_LANGUAGE_PREFS)) {
             with(model) {
-                updateTranslateFrom(preferences.getString(FROM_LANGUAGE_PREFS, ENGLISH_PREF))
-                updateTranslateTo(preferences.getString(TO_LANGUAGE_PREFS, RUSSIAN_PREF))
+                translateFrom.value = preferences.getString(FROM_LANGUAGE_PREFS, ENGLISH_PREF)
+                translateTo.value = preferences.getString(TO_LANGUAGE_PREFS, RUSSIAN_PREF)
             }
         }
     }

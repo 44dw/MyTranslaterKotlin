@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,7 +26,7 @@ class MainFragment : Fragment(), View.OnClickListener, OnDeleteListener {
 
     lateinit var model: TranslateViewModel
 
-    lateinit var translateEntityCollection: LiveData<List<TranslateEntity>>
+    lateinit var translateEntityCollection: MutableLiveData<MutableList<TranslateEntity>>
     lateinit var mainLanguageSpinnerFrom: Spinner
     lateinit var mainLanguageSpinnerTo: Spinner
     lateinit var mainRecyclerView: RecyclerView
@@ -46,7 +47,7 @@ class MainFragment : Fragment(), View.OnClickListener, OnDeleteListener {
     private fun initModelAndData() {
         activity?.let{
             model = ViewModelProviders.of(it)[TranslateViewModel::class.java]
-            translateEntityCollection = model.getTranslateEntityCollection()
+            translateEntityCollection = model.translateEntityCollection
             translateEntityCollection.observe(this, Observer<List<TranslateEntity>> { translateEntities ->
                 updateAndSetAdapter(translateEntities, mainAdapter, mainRecyclerView)
             })
@@ -71,7 +72,7 @@ class MainFragment : Fragment(), View.OnClickListener, OnDeleteListener {
                 ) {
                     view?.let {
                         val rawFrom: String = (it as TextView).text.toString()
-                        model.updateTranslateFrom(rawFrom)
+                        model.translateFrom.value = rawFrom
                     }
                 }
 
@@ -88,7 +89,7 @@ class MainFragment : Fragment(), View.OnClickListener, OnDeleteListener {
                 ) {
                     view?.let {
                         val rawTo: String = (it as TextView).text.toString()
-                        model.updateTranslateTo(rawTo)
+                        model.translateTo.value = rawTo
                     }
                 }
 
@@ -113,8 +114,8 @@ class MainFragment : Fragment(), View.OnClickListener, OnDeleteListener {
         mainLanguageSpinnerFrom: Spinner,
         mainLanguageSpinnerTo: Spinner
     ) {
-        val from: String = model.getTranslateFrom().value ?: ENGLISH_PREF
-        val to: String = model.getTranslateTo().value ?: RUSSIAN_PREF
+        val from: String = model.translateFrom.value ?: ENGLISH_PREF
+        val to: String = model.translateTo.value ?: RUSSIAN_PREF
 
         mainLanguageSpinnerFrom.setSelection(model.getLanguages().indexOf(from))
         mainLanguageSpinnerTo.setSelection(model.getLanguages().indexOf(to))
