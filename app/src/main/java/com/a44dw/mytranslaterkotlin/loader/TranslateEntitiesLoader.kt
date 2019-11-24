@@ -13,7 +13,7 @@ class TranslateEntitiesLoader(val vrModel: WeakReference<TranslateViewModel>): A
     override fun onPostExecute(translateEntities: List<TranslateEntity>) {
         val sortedEntities: List<TranslateEntity> = translateEntities.sortedBy { entity -> entity.id }
         vrModel.get()?.let {
-            it.translateEntityCollection.value = sortedEntities as MutableList<TranslateEntity>
+            it.translateEntityCollection.value = sortedEntities.toMutableList()
         }
     }
 }

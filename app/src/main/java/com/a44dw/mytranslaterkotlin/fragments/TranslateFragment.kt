@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -30,7 +31,7 @@ class TranslateFragment : Fragment(), View.OnClickListener, OnDeleteListener {
     lateinit var translateResultField: TextView
     lateinit var translateHotSwitch: Switch
     lateinit var translateToButton: Button
-    lateinit var translateResultLayout: TextView
+    lateinit var translateResultLayout: ConstraintLayout
     lateinit var translateFromHint: TextView
     lateinit var translateDictionaryHint: TextView
     lateinit var translateSave: ImageView
