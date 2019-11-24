@@ -39,7 +39,7 @@ class TranslateViewModel(application : Application) : AndroidViewModel(applicati
 
     var autoFrom: Boolean = false
     val executor: ExecutorService = Executors.newSingleThreadExecutor()
-    val dataRepository: DataReporitory = DataReporitory(TranslateDatabase.getDatabase(application))
+    val dataRepository: DataReporitory = DataReporitory(TranslateDatabase.getDatabase(application)!!)
     val translaterService: TranslaterService = TranslaterService(application)
 
     init {

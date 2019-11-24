@@ -12,9 +12,9 @@ abstract class TranslateDatabase: RoomDatabase() {
     abstract fun translateEntityDao(): TranslateEntityDao
 
     companion object {
-        lateinit var INSTANCE: TranslateDatabase
+        private var INSTANCE: TranslateDatabase? = null
 
-        fun getDatabase(context: Context): TranslateDatabase {
+        fun getDatabase(context: Context): TranslateDatabase? {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context.applicationContext, TranslateDatabase::class.java, "TranslateDatabase").build()
             }
