@@ -3,7 +3,7 @@ package com.a44dw.mytranslaterkotlin.repositories
 import com.a44dw.mytranslaterkotlin.database.TranslateDatabase
 import com.a44dw.mytranslaterkotlin.entities.TranslateEntity
 
-class DataReporitory(val database: TranslateDatabase) {
+class DataRepository(val database: TranslateDatabase) {
     fun insertTranslateEntity(entity: TranslateEntity) {
         database.translateEntityDao().insert(entity)
     }

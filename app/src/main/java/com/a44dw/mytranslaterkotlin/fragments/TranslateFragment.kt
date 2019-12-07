@@ -69,6 +69,7 @@ class TranslateFragment : Fragment(), View.OnClickListener, OnDeleteListener {
             translateResult = model.translateResult
             translateResult.observe(this, Observer<String> { translateResult ->
                 translateResultLayout.visibility = if (translateResult.isNotEmpty()) View.VISIBLE else View.GONE
+                translateResultField.text = translateResult
             })
             matchesEntities = model.matchesTranslateEntities
             matchesEntities.observe(this, Observer<List<TranslateEntity>> { matchesEntities ->

@@ -8,11 +8,10 @@ import com.a44dw.mytranslaterkotlin.entities.TranslateEntity
 import com.a44dw.mytranslaterkotlin.interfaces.TranslaterResponseListener
 import com.a44dw.mytranslaterkotlin.loader.MatchesEntitiesLoader
 import com.a44dw.mytranslaterkotlin.loader.TranslateEntitiesLoader
-import com.a44dw.mytranslaterkotlin.repositories.DataReporitory
+import com.a44dw.mytranslaterkotlin.repositories.DataRepository
 import com.a44dw.mytranslaterkotlin.service.TranslaterService
 import java.lang.ref.WeakReference
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
+import kotlinx.coroutines.*
 
 class TranslateViewModel(application : Application) : AndroidViewModel(application),
     TranslaterResponseListener {
@@ -38,8 +37,7 @@ class TranslateViewModel(application : Application) : AndroidViewModel(applicati
     lateinit var textToTranslate: String
 
     var autoFrom: Boolean = false
-    val executor: ExecutorService = Executors.newSingleThreadExecutor()
-    val dataRepository: DataReporitory = DataReporitory(TranslateDatabase.getDatabase(application)!!)
+    val dataRepository: DataRepository = DataRepository(TranslateDatabase.getDatabase(application)!!)
     val translaterService: TranslaterService = TranslaterService(application)
 
     init {
@@ -64,6 +62,11 @@ class TranslateViewModel(application : Application) : AndroidViewModel(applicati
     fun prepareTranslate(text: String) {
         textToTranslate = text.toLowerCase()
         findMatchesEntities()
+        hotTranslateChecked.value?.let {
+            if (it) {
+                provideTranslate()
+            }
+        }
     }
 
     private fun findMatchesEntities() {
@@ -94,10 +97,12 @@ class TranslateViewModel(application : Application) : AndroidViewModel(applicati
             return false
         }
 
-        executor.execute { Runnable {
+        GlobalScope.launch {
+            println("INSERT!" + entity.translatedText)
             dataRepository.insertTranslateEntity(entity)
             loadTranslateEntityCollection()
-        } }
+        }
+
         return true
     }
 
@@ -110,10 +115,10 @@ class TranslateViewModel(application : Application) : AndroidViewModel(applicati
     }
 
     fun deleteTranslateEntity(entityToDelete: TranslateEntity) {
-        executor.execute { Runnable {
+        GlobalScope.launch {
             dataRepository.deleteTranslateEntity(entityToDelete)
             loadTranslateEntityCollection()
-        } }
+        }
     }
 
     fun clearResultAndMatches() {

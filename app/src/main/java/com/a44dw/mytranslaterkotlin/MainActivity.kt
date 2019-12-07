@@ -105,8 +105,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         v?.id.let {
             if (it == R.id.mainClear) {
                 if (mainTranslateField.text.isNotEmpty()) {
-                    // нужно ли?
-                    // mainTranslateField.text.clear()
+                    mainTranslateField.text.clear()
                     translateFragment.clearTranslateResultField()
                 } else {
                     mainTranslateField.clearFocus()
