@@ -22,11 +22,11 @@ const val RUSSIAN_PREF = "русский"
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    lateinit var model: TranslateViewModel
-    lateinit var mainFragment: MainFragment
-    lateinit var translateFragment: TranslateFragment
-    lateinit var mainTranslateField: EditText
-    lateinit var mainClear: ImageView
+    private lateinit var model: TranslateViewModel
+    private lateinit var mainFragment: MainFragment
+    private lateinit var translateFragment: TranslateFragment
+    private lateinit var mainTranslateField: EditText
+    private lateinit var mainClear: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,16 +37,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         initLanguagePrefs()
 
         showMainFragment()
-    }
-
-    private fun initLanguagePrefs() {
-        val preferences = getPreferences(Activity.MODE_PRIVATE)
-        if (preferences.contains(FROM_LANGUAGE_PREFS) && preferences.contains(TO_LANGUAGE_PREFS)) {
-            with(model) {
-                translateFrom.value = preferences.getString(FROM_LANGUAGE_PREFS, ENGLISH_PREF)
-                translateTo.value = preferences.getString(TO_LANGUAGE_PREFS, RUSSIAN_PREF)
-            }
-        }
     }
 
     private fun initModelAndData() {
@@ -78,6 +68,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         })
         mainClear = findViewById(R.id.mainClear)
         mainClear.setOnClickListener(this)
+    }
+
+    private fun initLanguagePrefs() {
+        val preferences = getPreferences(Activity.MODE_PRIVATE)
+        if (preferences.contains(FROM_LANGUAGE_PREFS) && preferences.contains(TO_LANGUAGE_PREFS)) {
+            with(model) {
+                translateFrom.value = preferences.getString(FROM_LANGUAGE_PREFS, ENGLISH_PREF)
+                translateTo.value = preferences.getString(TO_LANGUAGE_PREFS, RUSSIAN_PREF)
+            }
+        }
     }
 
     private fun prepareTranslate(text: String) {
@@ -135,11 +135,5 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             mainTranslateField.clearFocus()
             showMainFragment()
         } ?: super.onBackPressed()
-
-        // раскомментить если код выше не сработает
-//        if (supportFragmentManager.findFragmentByTag(TRANSLATE_FRAGMENT_TAG) != null) {
-//            mainTranslateField.clearFocus()
-//            showMainFragment()
-//        } else super.onBackPressed()
     }
 }

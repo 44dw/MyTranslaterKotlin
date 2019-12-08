@@ -31,13 +31,13 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
         return if (data.size > maxElements) maxElements else data.size
     }
 
-    class MainViewHolder(val layout: CardView): RecyclerView.ViewHolder(layout) {
+    class MainViewHolder(private val layout: CardView): RecyclerView.ViewHolder(layout) {
 
-        val originalLang: TextView = layout.findViewById(R.id.fromLanguageTextView)
-        val translatedLang: TextView = layout.findViewById(R.id.toLanguageTextView)
-        val originalText: TextView = layout.findViewById(R.id.originalTextView)
-        val translatedText: TextView = layout.findViewById(R.id.translatedTextView)
-        val bascket: ImageView = layout.findViewById(R.id.basketImageView)
+        private val originalLang: TextView = layout.findViewById(R.id.fromLanguageTextView)
+        private val translatedLang: TextView = layout.findViewById(R.id.toLanguageTextView)
+        private val originalText: TextView = layout.findViewById(R.id.originalTextView)
+        private val translatedText: TextView = layout.findViewById(R.id.translatedTextView)
+        private val bascket: ImageView = layout.findViewById(R.id.basketImageView)
 
         fun bind(data: TranslateEntity, listener: OnDeleteListener) {
             layout.tag = data

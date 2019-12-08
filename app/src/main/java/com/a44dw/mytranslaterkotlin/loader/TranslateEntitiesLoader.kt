@@ -5,7 +5,7 @@ import com.a44dw.mytranslaterkotlin.entities.TranslateEntity
 import com.a44dw.mytranslaterkotlin.model.TranslateViewModel
 import java.lang.ref.WeakReference
 
-class TranslateEntitiesLoader(val vrModel: WeakReference<TranslateViewModel>): AsyncTask<Void, Void, List<TranslateEntity>>() {
+class TranslateEntitiesLoader(private val vrModel: WeakReference<TranslateViewModel>): AsyncTask<Void, Void, List<TranslateEntity>>() {
     override fun doInBackground(vararg params: Void?): List<TranslateEntity> {
         return vrModel.get()?.dataRepository?.getTranslateEntities() ?: emptyList()
     }

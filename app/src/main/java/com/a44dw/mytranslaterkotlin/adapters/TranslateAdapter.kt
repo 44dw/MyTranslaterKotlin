@@ -31,9 +31,9 @@ class TranslateAdapter: RecyclerView.Adapter<TranslateAdapter.TranslateViewHolde
 
     class TranslateViewHolder(val layout: ConstraintLayout): RecyclerView.ViewHolder(layout) {
 
-        val originalText: TextView = layout.findViewById(R.id.translateFrom)
-        val translateText: TextView = layout.findViewById(R.id.translateTo)
-        val bascket: ImageView = layout.findViewById(R.id.basketImageView)
+        private val originalText: TextView = layout.findViewById(R.id.translateFrom)
+        private val translateText: TextView = layout.findViewById(R.id.translateTo)
+        private val bascket: ImageView = layout.findViewById(R.id.basketImageView)
 
         fun bind(data: TranslateEntity, listener: OnDeleteListener) {
             layout.tag = data

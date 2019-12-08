@@ -22,7 +22,7 @@ import com.a44dw.mytranslaterkotlin.interfaces.OnDeleteListener
 import com.a44dw.mytranslaterkotlin.model.TranslateViewModel
 
 class MainFragment : Fragment(), View.OnClickListener, OnDeleteListener {
-    val mainAdapter: MainAdapter = MainAdapter()
+    private val mainAdapter: MainAdapter = MainAdapter()
 
     lateinit var model: TranslateViewModel
 
