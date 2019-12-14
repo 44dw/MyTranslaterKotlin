@@ -11,12 +11,11 @@ import org.json.JSONObject
 
 class TranslaterService(context: Context) {
 
-    val TRANSLATE_KEY = "trnsl.1.1.20190206T175808Z.634259c03aae2564.997ca9e90c780d7febb1b4b7364432d4ed27f745"
-    val TRANSLATE_URL = "https://translate.yandex.net/api/v1.5/tr.json/translate?"
+    private val TRANSLATE_KEY = "trnsl.1.1.20190206T175808Z.634259c03aae2564.997ca9e90c780d7febb1b4b7364432d4ed27f745"
+    private val TRANSLATE_URL = "https://translate.yandex.net/api/v1.5/tr.json/translate?"
 
     lateinit var languageMap: Map<String, String>
     lateinit var listener: TranslaterResponseListener
-    lateinit var translateBuilder: StringBuilder
     lateinit var queue: RequestQueue
 
     init {
@@ -55,23 +54,16 @@ class TranslaterService(context: Context) {
     }
 
     private fun concatUrl(textToTranslate: String, from: String?, to: String): String {
-        // TODO replace in Kotlin style
         val txt = "&text="
         val lng = "&lang="
         val fromTo = if (from == null) to else "$from-$to"
-        initTranslateBuilder()
-        translateBuilder.append(txt)
-        translateBuilder.append(textToTranslate)
-        translateBuilder.append(lng)
-        translateBuilder.append(fromTo)
 
-        return translateBuilder.toString()
-    }
-
-    private fun initTranslateBuilder() {
-        translateBuilder = StringBuilder(TRANSLATE_URL)
-        translateBuilder.append("key=")
-        translateBuilder.append(TRANSLATE_KEY)
+        return TRANSLATE_URL.plus("key=")
+            .plus(TRANSLATE_KEY)
+            .plus(txt)
+            .plus(textToTranslate)
+            .plus(lng)
+            .plus(fromTo)
     }
 
 }

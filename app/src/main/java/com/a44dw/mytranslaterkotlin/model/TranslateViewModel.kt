@@ -3,6 +3,7 @@ package com.a44dw.mytranslaterkotlin.model
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.a44dw.mytranslaterkotlin.database.TranslateDatabase
 import com.a44dw.mytranslaterkotlin.entities.TranslateEntity
 import com.a44dw.mytranslaterkotlin.interfaces.TranslaterResponseListener
@@ -36,19 +37,15 @@ class TranslateViewModel(application : Application) : AndroidViewModel(applicati
     var autoFrom: Boolean = false
     private val dataRepository: DataRepository = DataRepository(TranslateDatabase.getDatabase(application)!!)
     private val translaterService: TranslaterService = TranslaterService(application)
-    private val job: Job = Job()
-    // TODO try viewModelScope here
-    private val scope = CoroutineScope(job + Dispatchers.Main)
 
     init {
         translaterService.listener = this
-        scope.launch {
+        viewModelScope.launch {
             loadTranslateEntityCollection()
         }
     }
 
     private suspend fun loadTranslateEntityCollection() {
-        // переписано с TranslateEntitiesLoader
         val sortedTranslateEntities = dataRepository.getTranslateEntities().sortedBy { entity -> entity.id }
         translateEntityCollection.value = sortedTranslateEntities.toMutableList()
     }
@@ -74,14 +71,13 @@ class TranslateViewModel(application : Application) : AndroidViewModel(applicati
     }
 
     private fun findMatchesEntities() {
-        // переписано с MatchesEntitiesLoader
         if (textToTranslate.isEmpty()) {
             return
         }
         // отличие viewModelScope от GlobalScope: когда ViewModel уничтожается, все запущенные корутины
         // автоматически отменяются.
         // https://medium.com/androiddevelopers/easy-coroutines-in-android-viewmodelscope-25bffb605471
-        scope.launch {
+        viewModelScope.launch {
             val allEntities: MutableList<TranslateEntity>? = translateEntityCollection.value
             val filtered = allEntities?.filter {
                 it.originalText.startsWith(textToTranslate) || it.translatedText.startsWith(textToTranslate)
@@ -113,7 +109,7 @@ class TranslateViewModel(application : Application) : AndroidViewModel(applicati
             return false
         }
 
-        scope.launch {
+        viewModelScope.launch {
             dataRepository.insertTranslateEntity(entity)
             loadTranslateEntityCollection()
         }
@@ -130,7 +126,7 @@ class TranslateViewModel(application : Application) : AndroidViewModel(applicati
     }
 
     fun deleteTranslateEntity(entityToDelete: TranslateEntity) {
-        scope.launch {
+        viewModelScope.launch {
             dataRepository.deleteTranslateEntity(entityToDelete)
             loadTranslateEntityCollection()
         }

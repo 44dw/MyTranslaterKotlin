@@ -75,11 +75,10 @@ class TranslateFragment : Fragment(), View.OnClickListener, OnDeleteListener {
             matchesEntities.observe(this, Observer<List<TranslateEntity>> { matchesEntities ->
                 translateDictionaryHint.visibility = if (matchesEntities.isNotEmpty()) View.VISIBLE else View.GONE
                 translateAdapter.data = matchesEntities
-                val manager: LinearLayoutManager = LinearLayoutManager(activity)
+                val manager = LinearLayoutManager(activity)
                 translateRecyclerView.layoutManager = manager
                 translateRecyclerView.adapter = translateAdapter
-                val dividerItemDecoration: DividerItemDecoration =
-                    DividerItemDecoration(translateRecyclerView.context, manager.orientation)
+                val dividerItemDecoration = DividerItemDecoration(translateRecyclerView.context, manager.orientation)
                 translateRecyclerView.addItemDecoration(dividerItemDecoration)
             })
         }

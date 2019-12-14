@@ -113,19 +113,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
-        // другой вариант
-//        when (v?.id) {
-//            R.id.mainClear -> {
-//                if (mainTranslateField.text.isNotEmpty()) {
-//                    // нужно ли?
-//                    // mainTranslateField.text.clear()
-//                    translateFragment.clearTranslateResultField()
-//                } else {
-//                    mainTranslateField.clearFocus()
-//                    showMainFragment()
-//                }
-//            }
-//        }
     }
 
     override fun onBackPressed() {
