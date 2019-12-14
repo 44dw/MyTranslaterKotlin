@@ -6,14 +6,14 @@ import com.a44dw.mytranslaterkotlin.entities.TranslateEntity
 @Dao
 interface TranslateEntityDao {
     @Query("SELECT * FROM TranslateEntity")
-    fun getAll(): List<TranslateEntity>
+    suspend fun getAll(): List<TranslateEntity>
 
     @Insert
-    fun insert(entity: TranslateEntity): Long
+    suspend fun insert(entity: TranslateEntity): Long
 
     @Delete
-    fun delete(entity: TranslateEntity): Unit
+    suspend fun delete(entity: TranslateEntity): Unit
 
     @Update
-    fun update(entity: TranslateEntity): Unit
+    suspend fun update(entity: TranslateEntity): Unit
 }

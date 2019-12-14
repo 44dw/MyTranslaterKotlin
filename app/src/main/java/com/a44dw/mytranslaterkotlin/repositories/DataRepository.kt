@@ -4,15 +4,15 @@ import com.a44dw.mytranslaterkotlin.database.TranslateDatabase
 import com.a44dw.mytranslaterkotlin.entities.TranslateEntity
 
 class DataRepository(val database: TranslateDatabase) {
-    fun insertTranslateEntity(entity: TranslateEntity) {
+    suspend fun insertTranslateEntity(entity: TranslateEntity) {
         database.translateEntityDao().insert(entity)
     }
 
-    fun getTranslateEntities(): List<TranslateEntity> {
+    suspend fun getTranslateEntities(): List<TranslateEntity> {
         return database.translateEntityDao().getAll()
     }
 
-    fun deleteTranslateEntity(entity: TranslateEntity) {
+    suspend fun deleteTranslateEntity(entity: TranslateEntity) {
         database.translateEntityDao().delete(entity)
     }
 }
